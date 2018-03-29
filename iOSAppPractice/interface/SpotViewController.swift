@@ -10,6 +10,13 @@ import UIKit
 
 class SpotViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+    
+    let minHeaderHeight: CGFloat = 44 + UIApplication.shared.statusBarFrame.height;
+    let maxHeaderHeight: CGFloat = 100 + 44 + UIApplication.shared.statusBarFrame.height;
+    
+    var previousScrollOffset: CGFloat = 0;
     
     lazy var viewModel: SpotViewModel = {
         return SpotViewModel()
@@ -21,6 +28,12 @@ class SpotViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.initUI()
         self.initViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.headerHeightConstraint.constant = self.maxHeaderHeight
+        self.navigationBarTopConstraint.constant = UIApplication.shared.statusBarFrame.height
     }
     
     func initUI() {
@@ -60,6 +73,10 @@ class SpotViewController: UIViewController {
         }
         
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -82,12 +99,10 @@ class SpotViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension SpotViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return viewModel.spots.count
     }
     
@@ -106,6 +121,37 @@ extension SpotViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SpotViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
+        
+        let absoluteTop: CGFloat = 0;
+        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
+        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
+        
+        if canAnimateHeader(scrollView) {
+            
+            var newHeight = self.headerHeightConstraint.constant
+            if isScrollingDown {
+                newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
+            } else if isScrollingUp {
+
+                if scrollView.contentOffset.y > 0 {
+                    newHeight = self.minHeaderHeight
+                }else {
+                    newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
+                }
+            }
+            
+            if newHeight != self.headerHeightConstraint.constant {
+                self.headerHeightConstraint.constant = newHeight
+                self.setScrollPosition(self.previousScrollOffset)
+            }
+            
+            self.previousScrollOffset = scrollView.contentOffset.y
+        }
+        
+        // Load more api data
         let isContentLargerThanScreen = (scrollView.contentSize.height > scrollView.frame.size.height)
         let viewableHeight = isContentLargerThanScreen ? scrollView.frame.size.height : scrollView.contentSize.height
         
@@ -113,6 +159,53 @@ extension SpotViewController: UITableViewDelegate {
         if isAtBottom && !viewModel.isLoading {
             viewModel.loadNextPage()
         }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.scrollViewDidStopScrolling()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.scrollViewDidStopScrolling()
+        }
+    }
+    
+    func scrollViewDidStopScrolling() {
+        let range = self.maxHeaderHeight - self.minHeaderHeight
+        let midPoint = self.minHeaderHeight + (range / 2)
+        
+        if self.headerHeightConstraint.constant > midPoint {
+            self.expandHeader()
+        } else {
+            self.collapseHeader()
+        }
+    }
+    
+    func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
+        let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
+
+        return scrollView.contentSize.height > scrollViewMaxHeight
+    }
+    
+    func collapseHeader() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeightConstraint.constant = self.minHeaderHeight
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func expandHeader() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeightConstraint.constant = self.maxHeaderHeight
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func setScrollPosition(_ position: CGFloat) {
+        self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
     }
 }
 
