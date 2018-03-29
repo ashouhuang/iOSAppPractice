@@ -12,6 +12,13 @@
 		ADD93FA9206C97A00080C1BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD93FA7206C97A00080C1BD /* Main.storyboard */; };
 		ADD93FAB206C97A00080C1BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADD93FAA206C97A00080C1BD /* Assets.xcassets */; };
 		ADD93FAE206C97A00080C1BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADD93FAC206C97A00080C1BD /* LaunchScreen.storyboard */; };
+		ADD93FB7206CE3550080C1BD /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD93FB6206CE3550080C1BD /* ApiManager.swift */; };
+		ADD93FBA206CE3960080C1BD /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD93FB9206CE3960080C1BD /* config.swift */; };
+		ADD93FBD206CE3EF0080C1BD /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD93FBC206CE3EF0080C1BD /* Spot.swift */; };
+		ADD93FC3206CE63E0080C1BD /* SpotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD93FC1206CE63E0080C1BD /* SpotTableViewCell.swift */; };
+		ADD93FC4206CE63E0080C1BD /* SpotTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADD93FC2206CE63E0080C1BD /* SpotTableViewCell.xib */; };
+		ADD93FC6206CE8040080C1BD /* SpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD93FC5206CE8040080C1BD /* SpotViewController.swift */; };
+		ADD93FC8206CE82D0080C1BD /* SpotViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD93FC7206CE82D0080C1BD /* SpotViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +29,13 @@
 		ADD93FAA206C97A00080C1BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADD93FAD206C97A00080C1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADD93FAF206C97A00080C1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADD93FB6206CE3550080C1BD /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		ADD93FB9206CE3960080C1BD /* config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
+		ADD93FBC206CE3EF0080C1BD /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
+		ADD93FC1206CE63E0080C1BD /* SpotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotTableViewCell.swift; sourceTree = "<group>"; };
+		ADD93FC2206CE63E0080C1BD /* SpotTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpotTableViewCell.xib; sourceTree = "<group>"; };
+		ADD93FC5206CE8040080C1BD /* SpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotViewController.swift; sourceTree = "<group>"; };
+		ADD93FC7206CE82D0080C1BD /* SpotViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +68,10 @@
 		ADD93FA2206C97A00080C1BD /* iOSAppPractice */ = {
 			isa = PBXGroup;
 			children = (
+				ADD93FBB206CE3D50080C1BD /* logic */,
+				ADD93FB5206CE3320080C1BD /* service */,
+				ADD93FBE206CE5ED0080C1BD /* interface */,
+				ADD93FB8206CE3810080C1BD /* util */,
 				ADD93FA3206C97A00080C1BD /* AppDelegate.swift */,
 				ADD93FA5206C97A00080C1BD /* ViewController.swift */,
 				ADD93FA7206C97A00080C1BD /* Main.storyboard */,
@@ -62,6 +80,41 @@
 				ADD93FAF206C97A00080C1BD /* Info.plist */,
 			);
 			path = iOSAppPractice;
+			sourceTree = "<group>";
+		};
+		ADD93FB5206CE3320080C1BD /* service */ = {
+			isa = PBXGroup;
+			children = (
+				ADD93FB6206CE3550080C1BD /* ApiManager.swift */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
+		ADD93FB8206CE3810080C1BD /* util */ = {
+			isa = PBXGroup;
+			children = (
+				ADD93FB9206CE3960080C1BD /* config.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		ADD93FBB206CE3D50080C1BD /* logic */ = {
+			isa = PBXGroup;
+			children = (
+				ADD93FBC206CE3EF0080C1BD /* Spot.swift */,
+			);
+			path = logic;
+			sourceTree = "<group>";
+		};
+		ADD93FBE206CE5ED0080C1BD /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				ADD93FC1206CE63E0080C1BD /* SpotTableViewCell.swift */,
+				ADD93FC2206CE63E0080C1BD /* SpotTableViewCell.xib */,
+				ADD93FC5206CE8040080C1BD /* SpotViewController.swift */,
+				ADD93FC7206CE82D0080C1BD /* SpotViewModel.swift */,
+			);
+			path = interface;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +179,7 @@
 				ADD93FAE206C97A00080C1BD /* LaunchScreen.storyboard in Resources */,
 				ADD93FAB206C97A00080C1BD /* Assets.xcassets in Resources */,
 				ADD93FA9206C97A00080C1BD /* Main.storyboard in Resources */,
+				ADD93FC4206CE63E0080C1BD /* SpotTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +190,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADD93FC8206CE82D0080C1BD /* SpotViewModel.swift in Sources */,
 				ADD93FA6206C97A00080C1BD /* ViewController.swift in Sources */,
+				ADD93FBA206CE3960080C1BD /* config.swift in Sources */,
+				ADD93FBD206CE3EF0080C1BD /* Spot.swift in Sources */,
+				ADD93FC3206CE63E0080C1BD /* SpotTableViewCell.swift in Sources */,
+				ADD93FB7206CE3550080C1BD /* ApiManager.swift in Sources */,
 				ADD93FA4206C97A00080C1BD /* AppDelegate.swift in Sources */,
+				ADD93FC6206CE8040080C1BD /* SpotViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
